@@ -1,9 +1,7 @@
-function App() {
-  return (
-    <>
-      <h1>Frontend Hello World</h1>
-    </>
-  );
-}
+import Router from './router';
+
+const App = () => {
+  return <Router />;
+};
 
 export default App;
