@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import MainNavigation from '../header';
+import Footer from '../footer';
 
 const Layout = () => {
   const location = useLocation();
@@ -15,9 +16,7 @@ const Layout = () => {
       <main className="flex-1">
         <Outlet />
       </main>
-      <footer className="bg-gray-900 dark:bg-gray-800 text-white text-center py-4">
-        <p>&copy; 2025 My Website</p>
-      </footer>
+      <Footer />
     </div>
   );
 };
