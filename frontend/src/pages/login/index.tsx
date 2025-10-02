@@ -1,20 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import AuthLayout from '../../components/auth-layout';
 import { FormProvider, useForm } from 'react-hook-form';
-import Input from '../../components/input';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type IFormInput = {
-  email: string;
-  password: string;
-};
+import AuthLayout from '../../components/auth-layout';
+import Input from '../../components/input';
+import { loginSchema, type LoginForm } from './validation';
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const form = useForm<IFormInput>();
+  const form = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const onSubmit = (data: IFormInput) => {
-    // Handle login logic here
+  const onSubmit = (data: LoginForm) => {
+    // Send data to the backend
     console.log('Login submitted:', data);
   };
 
@@ -27,9 +27,8 @@ const Login = () => {
 
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <Input label="Email Address" id="email" type="email" placeholder="Enter your email" />
-
-          <Input label="Password" id="password" type="password" placeholder="Enter your password" />
+          <Input label="Email Address" name="email" type="email" placeholder="Enter your email" />
+          <Input label="Password" name="password" type="password" placeholder="Enter your password" />
 
           <div className="flex items-center justify-between">
             <div className="text-sm">
@@ -52,7 +51,8 @@ const Login = () => {
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer transition-colors font-medium shadow-lg hover:shadow-xl"
+              // disabled={buttonDisabled}
+              className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer transition-colors font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default"
             >
               Sign In
             </button>
