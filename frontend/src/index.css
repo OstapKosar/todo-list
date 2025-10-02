@@ -1,4 +1,13 @@
 @import "tailwindcss";
 
+body {
+	overflow: auto;
+	background-color: theme('colors.gray.50');
+}
+
+.dark body {
+	background-color: theme('colors.gray.900');
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
