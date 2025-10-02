@@ -19,7 +19,7 @@ const MainNavigation = () => {
         to="/"
         className="text-2xl font-bold text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors"
       >
-        Todo App
+        Smart Tasks Matrix
       </Link>
       <div className="flex items-center gap-4">
         <button
