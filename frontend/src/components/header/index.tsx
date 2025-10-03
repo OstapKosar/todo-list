@@ -14,7 +14,7 @@ const MainNavigation = () => {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-md px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+    <header className="bg-white dark:bg-gray-800 shadow-md px-6 py-8 flex justify-between items-center">
       <Link
         to="/"
         className="text-2xl font-bold text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors"
