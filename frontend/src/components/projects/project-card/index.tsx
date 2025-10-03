@@ -20,18 +20,18 @@ const ProjectCard = ({ project }: ProjectCardProps) => (
     <div className="w-full flex justify-center">
       <MatrixPreview />
     </div>
-    <div className="p-4 flex justify-between gap-4">
-      <Link
-        to={`/projects/${project.id}`}
-        className="text-blue-900 dark:text-blue-200 hover:text-blue-400 rounded-lg transition-colors"
-      >
-        View Project
-      </Link>
+    <div className="p-2 pt-4 flex justify-between gap-4">
       <Link
         to={`/projects/delete/${project.id}`}
         className="text-red-900 dark:text-red-200 hover:text-red-400 rounded-lg transition-colors"
       >
         Delete Project
+      </Link>
+      <Link
+        to={`/projects/${project.id}`}
+        className="text-blue-900 dark:text-blue-200 hover:text-blue-400 rounded-lg transition-colors"
+      >
+        View Project
       </Link>
     </div>
   </div>
