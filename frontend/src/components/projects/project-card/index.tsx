@@ -10,7 +10,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => (
-  <div className="flex flex-col justify-center p-6 rounded-lg shadow-sm bg-gray-200 dark:bg-gray-800 hover:shadow-md transition-shadow cursor-pointer">
+  <div className="flex flex-col justify-center p-6 rounded-lg shadow-sm bg-gray-200 dark:bg-gray-800 hover:shadow-md transition-shadow">
     <div className="p-2">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">{project.name}</h2>
     </div>
