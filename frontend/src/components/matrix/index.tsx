@@ -1,8 +1,8 @@
 const Matrix = () => {
   return (
-    <div className="flex justify-center m-10 bg-gray-800 p-10 rounded-lg">
+    <div className="flex justify-center m-10 bg-gray-100 dark:bg-gray-800 p-10 rounded-lg">
       <div className="rotate-270 h-fit self-center mr-[-50px]">
-        <p className="text-2xl font-bold text-gray-500">Importance</p>
+        <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">Importance</p>
       </div>
       <div className="flex flex-col items-center">
         <div className="flex">
@@ -48,7 +48,7 @@ const Matrix = () => {
             />
           </svg>
         </div>
-        <p className="text-2xl font-bold text-gray-500 self-center">Urgency</p>
+        <p className="text-2xl font-bold text-gray-600 dark:text-gray-400 self-center">Urgency</p>
       </div>
     </div>
   );
