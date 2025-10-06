@@ -51,5 +51,6 @@ const projectsSlice = createSlice({
   },
 });
 
-export const { addProject, openCreateModal, closeCreateModal } = projectsSlice.actions;
+export const { addProject, openCreateModal, closeCreateModal, addTask, toggleTaskCompletion, removeTask } =
+  projectsSlice.actions;
 export default projectsSlice.reducer;
