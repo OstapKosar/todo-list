@@ -2,8 +2,8 @@ import type { TextareaHTMLAttributes } from 'react';
 import { get, useFormContext } from 'react-hook-form';
 import { useState } from 'react';
 
-import { formElementClasses } from '../../../utils/form-element-classes';
-import { cn } from '../../../utils/tailwind';
+import { formElementClasses } from '@/utils/form-element-classes';
+import { cn } from '@/utils/tailwind';
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;

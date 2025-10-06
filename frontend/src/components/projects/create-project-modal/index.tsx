@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../store/store';
-import { addProject, closeCreateModal } from '../../../store/slices/projects/slice';
 import { useForm, FormProvider } from 'react-hook-form';
+import type { RootState } from '@/store/store';
+
+import { addProject, closeCreateModal } from '@/store/slices/projects/slice';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Input from '../../form/input';
-import Textarea from '../../form/textarea';
+import Input from '@/components/form/input';
+import Textarea from '@/components/form/textarea';
 import { createProjectSchema, type CreateProjectForm, maxDescriptionLength } from './validation';
 
 const CreateProjectModal: React.FC = () => {

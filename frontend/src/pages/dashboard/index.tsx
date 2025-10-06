@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import ProjectCard from '../../components/projects/project-card';
-import { openCreateModal } from '../../store/slices/projects/slice';
+import ProjectCard from '@/components/projects/project-card';
+import { openCreateModal } from '@/store/slices/projects/slice';
 import { useDispatch } from 'react-redux';
-import CreateProjectModal from '../../components/projects/create-project-modal';
+import CreateProjectModal from '@/components/projects/create-project-modal';
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
