@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { maxDescriptionLength } from '.';
+
+export const maxDescriptionLength = 400;
 
 export const createProjectSchema = z.object({
   name: z.string().min(3, 'Project name is required').max(30, 'Name is too long'),

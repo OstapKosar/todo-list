@@ -6,9 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '../../form/input';
 import Textarea from '../../form/textarea';
-import { createProjectSchema, type CreateProjectForm } from './validation';
-
-export const maxDescriptionLength = 400;
+import { createProjectSchema, type CreateProjectForm, maxDescriptionLength } from './validation';
 
 const CreateProjectModal: React.FC = () => {
   const dispatch = useDispatch();
