@@ -1,6 +1,7 @@
 export type Project = {
   id: string;
   name: string;
+  description?: string;
   tasks: Task[];
 };
 
@@ -12,5 +13,4 @@ export type Task = {
 
 export type ProjectsState = {
   projects: Project[];
-  isCreateModalOpen: boolean;
 };

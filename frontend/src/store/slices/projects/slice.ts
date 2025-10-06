@@ -3,7 +3,6 @@ import type { ProjectsState } from './types';
 
 const initialState: ProjectsState = {
   projects: [],
-  isCreateModalOpen: false,
 };
 
 const projectsSlice = createSlice({
@@ -41,16 +40,8 @@ const projectsSlice = createSlice({
         project.tasks = project.tasks.filter((task) => task.id !== taskId);
       }
     },
-
-    openCreateModal: (state) => {
-      state.isCreateModalOpen = true;
-    },
-    closeCreateModal: (state) => {
-      state.isCreateModalOpen = false;
-    },
   },
 });
 
-export const { addProject, openCreateModal, closeCreateModal, addTask, toggleTaskCompletion, removeTask } =
-  projectsSlice.actions;
+export const { addProject, addTask, toggleTaskCompletion, removeTask } = projectsSlice.actions;
 export default projectsSlice.reducer;
