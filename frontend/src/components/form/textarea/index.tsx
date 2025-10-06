@@ -41,7 +41,7 @@ const Textarea = ({ label, name, placeholder, maxLength = 200, ...props }: Texta
       {error && <p className={cn('mt-1 text-sm', { 'text-red-700 dark:text-red-400': error })}>{error.message}</p>}
       <p
         className={cn(
-          'text-sm bg-white/95 dark:bg-gray-800/95 text-gray-500 dark:text-gray-400 px-2 py-1 rounded-md absolute bottom-2 right-2',
+          'text-sm bg-white/95 dark:bg-gray-800/95 text-gray-500 dark:text-gray-400 px-2 py-1 rounded-md absolute bottom-2 right-2 transition-colors duration-200',
           {
             'text-yellow-700 dark:text-yellow-400': charCount >= maxLength * 0.5 && charCount < maxLength * 0.75,
             'text-orange-700 dark:text-orange-400': charCount >= maxLength * 0.75 && charCount < maxLength,
