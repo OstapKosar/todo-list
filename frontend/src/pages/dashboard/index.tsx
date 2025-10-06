@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ProjectCard from '@/components/projects/project-card';
-import { openCreateModal } from '@/store/slices/projects/slice';
+import { openModal } from '@/store/slices/modal/slice';
 import { useDispatch } from 'react-redux';
 import CreateProjectModal from '@/components/projects/create-project-modal';
 
@@ -22,7 +22,7 @@ const DashboardPage = () => {
   ]);
 
   const handleCreateProject = () => {
-    dispatch(openCreateModal());
+    dispatch(openModal({ name: 'create-project' }));
   };
 
   return (
