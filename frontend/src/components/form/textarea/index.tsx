@@ -17,6 +17,10 @@ const Textarea = ({ label, name, placeholder, maxLength = 200, ...props }: Texta
   const error = get(formState.errors, name);
   const [charCount, setCharCount] = useState(0);
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCharCount(e.target.value.length);
+  };
+
   return (
     <div className="relative">
       <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -27,9 +31,7 @@ const Textarea = ({ label, name, placeholder, maxLength = 200, ...props }: Texta
         {...register(name)}
         placeholder={placeholder}
         maxLength={maxLength}
-        onChange={(e) => {
-          setCharCount(e.target.value.length);
-        }}
+        onChange={handleChange}
         style={{
           paddingBottom: '2.5rem',
         }}
