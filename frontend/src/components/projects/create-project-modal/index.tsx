@@ -9,7 +9,7 @@ import Input from '@/components/form/input';
 import Textarea from '@/components/form/textarea';
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
-import { createProjectSchema, type CreateProjectForm, maxDescriptionLength } from './validation';
+import { createProjectSchema, type CreateProjectForm } from './validation';
 
 const Content: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Content: React.FC = () => {
 
   const onSubmit = (data: CreateProjectForm) => {
     dispatch(addProject({ id: Date.now(), name: data.name, description: data.description ?? '', tasks: [] }));
-    dispatch(closeModal({ name: 'create-project' }));
+    dispatch(closeModal({ name: modals.createProject }));
     reset();
   };
 
@@ -39,19 +39,14 @@ const Content: React.FC = () => {
       >
         <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-100">Create Project</h3>
         <Input label="Project Name" name="name" type="text" placeholder="Project Name" />
-        <Textarea
-          label="Project Description"
-          name="description"
-          placeholder="Project Description"
-          maxLength={maxDescriptionLength}
-        />
+        <Textarea label="Project Description" name="description" placeholder="Project Description" />
 
         <div className="flex justify-end gap-2">
           <button
             type="button"
             className="pr-2 text-red-900 dark:text-red-200 hover:text-red-400 rounded-lg transition-colors hover:cursor-pointer"
             onClick={() => {
-              dispatch(closeModal({ name: 'create-project' }));
+              dispatch(closeModal({ name: modals.createProject }));
               reset();
             }}
           >

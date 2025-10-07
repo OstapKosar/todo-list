@@ -3,6 +3,7 @@ import ProjectCard from '@/components/projects/project-card';
 import { openModal } from '@/store/slices/modal/slice';
 import { useDispatch } from 'react-redux';
 import CreateProjectModal from '@/components/projects/create-project-modal';
+import { modals } from '@/constants/modals';
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const DashboardPage = () => {
   ]);
 
   const handleCreateProject = () => {
-    dispatch(openModal({ name: 'create-project' }));
+    dispatch(openModal({ name: modals.createProject }));
   };
 
   return (
