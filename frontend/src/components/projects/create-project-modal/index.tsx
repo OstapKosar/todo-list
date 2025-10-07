@@ -31,6 +31,11 @@ const Content: React.FC = () => {
     reset();
   };
 
+  const handleCloseModal = () => {
+    dispatch(closeModal({ name: modals.createProject }));
+    reset();
+  };
+
   return (
     <FormProvider {...form}>
       <form
@@ -45,10 +50,7 @@ const Content: React.FC = () => {
           <button
             type="button"
             className="pr-2 text-red-900 dark:text-red-200 hover:text-red-400 rounded-lg transition-colors hover:cursor-pointer"
-            onClick={() => {
-              dispatch(closeModal({ name: modals.createProject }));
-              reset();
-            }}
+            onClick={handleCloseModal}
           >
             Close
           </button>
