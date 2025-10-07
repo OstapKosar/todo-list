@@ -43,5 +43,5 @@ const projectsSlice = createSlice({
   },
 });
 
-export const { addProject, addTask, toggleTaskCompletion, removeTask } = projectsSlice.actions;
+export const { addProject, addTask, toggleTaskCompletion, removeTask, removeProject } = projectsSlice.actions;
 export default projectsSlice.reducer;
