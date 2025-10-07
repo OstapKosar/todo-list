@@ -3,6 +3,7 @@ import ProjectCard from '@/components/projects/project-card';
 import { openModal } from '@/store/slices/modal/slice';
 import { useDispatch } from 'react-redux';
 import CreateProjectModal from '@/components/projects/create-project-modal';
+import DeleteProjectModal from '@/components/projects/delete-project-modal';
 import { modals } from '@/constants/modals';
 
 const DashboardPage = () => {
@@ -29,6 +30,7 @@ const DashboardPage = () => {
   return (
     <div className="flex flex-col p-10 min-h-screen">
       <CreateProjectModal />
+      <DeleteProjectModal />
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">Your Projects</h1>
         <button
