@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import MatrixPreview from '../../matrix/matrix-preview';
+import { useDispatch } from 'react-redux';
+
+import MatrixPreview from '@/components/matrix/matrix-preview';
 import { openModal } from '@/store/slices/modal/slice';
 import { modals } from '@/constants/modals';
-import { useDispatch } from 'react-redux';
 
 interface ProjectCardProps {
   project: {
