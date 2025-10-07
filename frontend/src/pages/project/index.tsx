@@ -30,7 +30,7 @@ const ProjectDetailsPage = () => {
               className="text-blue-900 dark:text-blue-200 hover:text-blue-400 text-lg rounded-lg transition-colors hover:cursor-pointer"
               onClick={handleOpenTasksModal}
             >
-              Task List
+              Tasks List
             </button>
           </div>
         </div>
