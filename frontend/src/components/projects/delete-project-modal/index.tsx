@@ -10,17 +10,16 @@ const Content = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { payload } = useSelector(selectModal);
-  const projectId = payload.projectId;
 
   const handleCloseModal = () => {
     dispatch(closeModal({ name: modals.deleteProject }));
   };
 
   const handleDeleteProject = () => {
-    dispatch(removeProject({ id: projectId }));
+    dispatch(removeProject({ id: payload.projectId }));
     dispatch(closeModal({ name: modals.deleteProject }));
     navigate('/dashboard');
-    console.log(`removing project: ${projectId}`);
+    console.log(`removing project: ${payload.projectId}`);
   };
 
   return (
