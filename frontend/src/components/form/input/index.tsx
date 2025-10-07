@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes } from 'react';
 import { get, useFormContext } from 'react-hook-form';
-import { formElementClasses } from '../../../utils/form-element-classes';
-import { cn } from '../../../utils/tailwind';
+import { formElementClasses } from '@/utils/form-element-classes';
+import { cn } from '@/utils/tailwind';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
