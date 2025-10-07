@@ -1,4 +1,4 @@
-import Matrix from './components/matrix';
+import Matrix from '@/components/matrix';
 
 const MainPage = () => {
   return (
