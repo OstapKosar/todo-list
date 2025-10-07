@@ -29,7 +29,7 @@ const projectsSlice = createSlice({
       if (project) {
         const task = project.tasks.find((t) => t.id === taskId);
         if (task) {
-          task.completed = !task.completed;
+          task.isCompleted = !task.isCompleted;
         }
       }
     },

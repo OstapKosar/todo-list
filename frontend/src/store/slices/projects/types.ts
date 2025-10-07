@@ -8,7 +8,10 @@ export type Project = {
 export type Task = {
   id: string;
   title: string;
-  completed: boolean;
+  description?: string;
+  urgency: number;
+  importance: number;
+  isCompleted: boolean;
 };
 
 export type ProjectsState = {
