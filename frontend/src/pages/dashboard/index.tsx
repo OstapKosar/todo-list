@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import ProjectCard from '@/components/projects/project-card';
-import { openModal } from '@/store/slices/modal/slice';
 import { useDispatch } from 'react-redux';
-import CreateProjectModal from '@/components/projects/create-project-modal';
-import DeleteProjectModal from '@/components/projects/delete-project-modal';
+
+import ProjectCard from '@/components/projects/card';
+import CreateProjectModal from '@/components/projects/create-modal';
+import DeleteProjectModal from '@/components/projects/delete-modal';
+import { openModal } from '@/store/slices/modal/slice';
 import { modals } from '@/constants/modals';
 
 const DashboardPage = () => {
