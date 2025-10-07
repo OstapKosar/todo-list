@@ -10,7 +10,7 @@ const ProjectDetailsPage = () => {
   const dispatch = useDispatch();
 
   const handleOpenTasksModal = () => {
-    dispatch(openModal({ name: modals.tasks }));
+    dispatch(openModal({ name: modals.projectTasks }));
   };
 
   return (

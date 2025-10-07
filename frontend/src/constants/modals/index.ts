@@ -1,6 +1,6 @@
 export const modals = {
   createProject: 'create-project',
   deleteProject: 'delete-project',
-  tasks: 'tasks',
-  taskDetail: 'task-detail',
+  projectTasks: 'project-tasks',
+  taskDetails: 'task-details',
 };

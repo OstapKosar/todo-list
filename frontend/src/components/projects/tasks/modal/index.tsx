@@ -9,7 +9,7 @@ const Content = () => {
   const dispatch = useDispatch();
 
   const handleCloseModal = () => {
-    dispatch(closeModal({ name: modals.tasks }));
+    dispatch(closeModal({ name: modals.projectTasks }));
   };
 
   return (
@@ -41,7 +41,7 @@ const Content = () => {
 };
 const TasksModal = () => {
   return (
-    <Modal modalName={modals.tasks}>
+    <Modal modalName={modals.projectTasks}>
       <Content />
     </Modal>
   );
