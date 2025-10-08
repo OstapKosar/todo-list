@@ -7,27 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   id        String    @id @default(uuid())
   email     String    @unique
-  name      String?
+  name      String
+  password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  projects  project[]
+  projects  Project[]
+
+  @@map("users")
 }
 
-model project {
+model Project {
   id          String        @id @default(uuid())
   name        String
   description String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   ownerId     String
-  owner       user          @relation(fields: [ownerId], references: [id])
-  tasks       projectTask[]
+  owner       User          @relation(fields: [ownerId], references: [id])
+  tasks       ProjectTask[]
+
+  @@map("projects")
 }
 
-model projectTask {
+model ProjectTask {
   id          String   @id @default(uuid())
   title       String
   description String?
@@ -37,5 +42,7 @@ model projectTask {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   projectId   String
-  project     project  @relation(fields: [projectId], references: [id])
+  project     Project  @relation(fields: [projectId], references: [id])
+
+  @@map("project_tasks")
 }
