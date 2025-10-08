@@ -24,7 +24,7 @@ const ProjectDetailsPage = () => {
               to={'/dashboard'}
               className="text-gray-900 dark:text-gray-300 hover:text-gray-400 text-md rounded-lg transition-colors hover:cursor-pointer"
             >
-              Go Back
+              All Projects
             </Link>
             <button
               className="text-blue-900 dark:text-blue-200 hover:text-blue-400 text-lg rounded-lg transition-colors hover:cursor-pointer"
