@@ -3,6 +3,7 @@ node_modules/
 
 dist/
 build/
+backend/generated/prisma
 
 .env
 .env.development.local
