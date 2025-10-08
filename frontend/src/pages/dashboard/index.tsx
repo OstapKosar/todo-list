@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { projects } from '@/constants/demo-data';
 import { useDispatch } from 'react-redux';
 
 import ProjectCard from '@/components/projects/card';
@@ -9,20 +9,6 @@ import { modals } from '@/constants/modals';
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
-
-  const [projects] = useState([
-    {
-      id: 1,
-      name: 'Todo App',
-      description: 'Manage your daily tasks efficiently.',
-    },
-    { id: 2, name: 'Notes App', description: 'Take and organize notes.' },
-    {
-      id: 3,
-      name: 'Workout Tracker',
-      description: 'Track your workouts and progress.',
-    },
-  ]);
 
   const handleCreateProject = () => {
     dispatch(openModal({ name: modals.createProject }));

@@ -4,6 +4,7 @@ import Signup from '@/pages/sign-up';
 import MainPage from '@/index';
 import Layout from '@/components/layout';
 import DashboardPage from '@/pages/dashboard';
+import ProjectDetailsPage from '@/pages/project';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+      {
+        path: '/dashboard/projects/:id',
+        element: <ProjectDetailsPage />,
       },
     ],
   },
