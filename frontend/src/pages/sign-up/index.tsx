@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -5,28 +6,38 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import AuthLayout from '@/components/auth-layout';
 import Input from '@/components/form/input';
 import { signupSchema, type SignupForm } from './validation';
+import { extractErrorMessage } from '@/utils/errors';
+import ErrorMessage from '@/components/error-message';
+import { makeRequest } from '@/utils/api/make-request';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = (data: SignupForm) => {
-    // Handle signup logic here
-    console.log('Signup submitted:', data);
+  const onSubmit = async (data: { name: string; email: string; password: string }) => {
+    try {
+      await makeRequest('/auth/signup', 'POST', data);
+      navigate('/dashboard');
+    } catch (error: unknown) {
+      setErrorMessage(extractErrorMessage(error));
+    }
   };
 
   return (
     <AuthLayout>
-      <div className="text-center mb-8">
+      <div className="text-center mb-4">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Create Account</h2>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Sign up to get started with your account</p>
       </div>
 
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4">
           <Input label="Full Name" name="name" type="text" placeholder="Enter your full name" />
           <Input label="Email Address" name="email" type="email" placeholder="Enter your email" />
           <Input label="Password" name="password" type="password" placeholder="Create a password" />
