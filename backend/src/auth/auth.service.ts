@@ -7,6 +7,7 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -27,11 +28,12 @@ export class AuthService {
       throw new ConflictException('User with this email already exists');
     }
 
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
     return this.prisma.user.create({
       data: {
         name: dto.name,
         email: dto.email,
-        password: dto.password, // await bcrypt.hash(dto.password, 10) after adding bcrypt
+        password: hashedPassword,
       },
     });
   }
@@ -45,8 +47,11 @@ export class AuthService {
 
     if (!user) {
       throw new NotFoundException('User not found');
-    } else if (user.password !== dto.password) {
-      // await bcrypt.compare(dto.password, user.password) after adding bcrypt
+    }
+
+    const isValidPassword = await bcrypt.compare(dto.password, user.password);
+
+    if (!isValidPassword) {
       throw new UnauthorizedException('Invalid password');
     }
 
