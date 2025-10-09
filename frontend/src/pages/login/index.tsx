@@ -21,8 +21,11 @@ const Login = () => {
   const onSubmit = async (data: LoginForm) => {
     try {
       await makeRequest('/auth/login', 'POST', data);
+
+      // success
       navigate('/dashboard');
     } catch (error: unknown) {
+      // error
       setErrorMessage(extractErrorMessage(error));
     }
   };
@@ -74,7 +77,7 @@ const Login = () => {
               Don't have an account?{' '}
               <button
                 type="button"
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate('/sign-up')}
                 className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 cursor-pointer transition-colors"
               >
                 Sign up here
