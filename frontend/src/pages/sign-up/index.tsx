@@ -20,7 +20,7 @@ const Signup = () => {
 
   const onSubmit = async (data: { name: string; email: string; password: string }) => {
     try {
-      await makeRequest('/auth/signup', 'POST', data);
+      await makeRequest('/auth/sign-up', 'POST', data);
       navigate('/dashboard');
     } catch (error: unknown) {
       setErrorMessage(extractErrorMessage(error));
