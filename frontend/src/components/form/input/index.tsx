@@ -3,12 +3,12 @@ import { get, useFormContext } from 'react-hook-form';
 import { formElementClasses } from '@/utils/form-element-classes';
 import { cn } from '@/utils/tailwind';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   name: string;
   type: string;
   placeholder: string;
-}
+};
 
 const Input = ({ label, name, type, placeholder, ...props }: InputProps) => {
   const { register, formState } = useFormContext();
