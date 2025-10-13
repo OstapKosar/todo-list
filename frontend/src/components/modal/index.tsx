@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 
 import { selectModal } from '@/store/slices/modal/selectors';
 
-interface ModalProps {
+type ModalProps = {
   children: React.ReactNode;
   modalName: string;
-}
+};
 
 const Modal: React.FC<ModalProps> = ({ children, modalName }) => {
   const { isOpened, modalName: currentModalName } = useSelector(selectModal);
