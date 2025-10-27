@@ -2,8 +2,12 @@ import { AxiosError } from 'axios';
 
 export const extractErrorMessage = (e: unknown) => {
   if (e instanceof AxiosError) {
-    console.log(e);
-    return e.response?.data.message;
+    const errorData = e.response?.data;
+    if (errorData?.message) {
+      return errorData.message;
+    }
+
+    return e.response?.statusText || e.message || 'An error occurred';
   } else if (e instanceof Error) {
     return e.message;
   } else {
