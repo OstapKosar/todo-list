@@ -78,9 +78,9 @@ export class AuthController {
   @UseGuards(JwtGuard('access'))
   async changePassword(
     @Body() dto: ChangePasswordBodyDto,
-    @Req() req: AuthenticatedRequest,
+    @Context('uid') userId: string,
   ) {
-    return await this.authService.changePassword(dto, req.ctx.uid);
+    return await this.authService.changePassword(dto, userId);
   }
 
   @Post('refresh')
