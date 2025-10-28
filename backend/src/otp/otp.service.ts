@@ -9,7 +9,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 
 import { User, UserOTPType, UserOTPStatus } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
-import { UsersService } from 'src/users/users.service';
+import { UserService } from 'src/user/user.service';
 import { MailService } from 'src/mail/mail.service';
 import { verifyEmailTemplate } from 'src/mail/templates/verify-email.template';
 import {
@@ -22,7 +22,7 @@ import { resetPasswordTemplate } from 'src/mail/templates/reset-password.templat
 export class OTPService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
     private readonly mailService: MailService,
   ) {}
 
@@ -73,7 +73,7 @@ export class OTPService {
     code: string,
     type: UserOTPType,
   ) {
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('Incorrect email provided');

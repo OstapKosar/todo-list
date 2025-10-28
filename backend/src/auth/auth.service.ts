@@ -12,7 +12,7 @@ import { User, UserOTPType, UserStatus } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { SignUpBodyDto } from './dto/sign-up/sign-up.body-dto';
 import { LoginBodyDto } from './dto/login/login.body-dto';
-import { UsersService } from 'src/users/users.service';
+import { UserService } from 'src/user/user.service';
 import { AuthJwtService } from 'src/jwt/jwt.service';
 import { OTPService } from 'src/otp/otp.service';
 import { MailService } from 'src/mail/mail.service';
@@ -28,7 +28,7 @@ import { ResetPasswordBodyDto } from './dto/forgot-password/reset-password/reset
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
     private readonly jwtService: AuthJwtService,
     private readonly otpService: OTPService,
     private readonly mailService: MailService,
@@ -68,7 +68,7 @@ export class AuthService {
   }
 
   async signup(dto: SignUpBodyDto, res: Response) {
-    const user = await this.usersService.findUserByEmail(dto.email);
+    const user = await this.userService.findUserByEmail(dto.email);
 
     if (user) {
       throw new ConflictException('User with this email already exists');
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   async validateUser(dto: { email: string; password: string }) {
-    const user = await this.usersService.findUserByEmail(dto.email);
+    const user = await this.userService.findUserByEmail(dto.email);
 
     if (!user) {
       return null;
@@ -126,7 +126,7 @@ export class AuthService {
     const { email, password } = dto;
 
     try {
-      const user = await this.usersService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw new NotFoundException('User not found');
       }
@@ -188,7 +188,7 @@ export class AuthService {
   ) {
     const { email } = dto;
 
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -251,7 +251,7 @@ export class AuthService {
 
   async requestNewOtp(dto: RequestNewOtpBodyDto) {
     const { email, type } = dto;
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -264,7 +264,7 @@ export class AuthService {
   async resetPassword(dto: ResetPasswordBodyDto) {
     const { password, email } = dto;
 
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
     }
