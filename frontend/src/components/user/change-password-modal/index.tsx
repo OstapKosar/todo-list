@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FiLoader } from 'react-icons/fi';
@@ -8,50 +8,52 @@ import Modal from '@/components/modal';
 import Input from '@/components/form/input';
 import { modals } from '@/constants/modals';
 import { closeModal, openModal } from '@/store/slices/modal/slice';
-import { updateUser } from '@/store/slices/user/slice';
 import { changePasswordSchema } from './validation';
 import type { ChangePasswordForm } from './types';
+import { makeRequest } from '@/utils/api/make-request';
+import { extractErrorMessage } from '@/utils/errors';
+import type { RootState } from '@/store/store';
+import { useState } from 'react';
+import ErrorMessage from '@/components/error-message';
 
 const Content: React.FC = () => {
   const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const user = useSelector((state: RootState) => state.user.user);
 
   const form = useForm<ChangePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: { currentPassword: '', newPassword: '' },
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting, isDirty },
-    reset,
-  } = form;
+  if (!user) {
+    return null;
+  }
+
+  const { handleSubmit } = form;
 
   const handleSaveChanges = async (data: ChangePasswordForm) => {
+    setIsSubmitting(true);
+    setErrorMessage(null);
     try {
-      dispatch(updateUser(data));
+      await makeRequest('/auth/change-password', 'POST', data);
 
-      toast.success('Profile updated successfully!');
+      toast.success('Password updated successfully!');
 
       dispatch(closeModal({ name: modals.changePassword }));
       dispatch(openModal({ name: modals.userInfo }));
-
-      reset();
     } catch (error) {
-      toast.error('Failed to update profile. Please try again later.');
-      console.error(error);
+      setErrorMessage(extractErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleCancel = () => {
-    if (isDirty) {
-      if (window.confirm('You have unsaved changes. Are you sure you want to cancel?')) {
-        dispatch(closeModal({ name: modals.changePassword }));
-        dispatch(openModal({ name: modals.userInfo }));
-      }
-    } else {
-      dispatch(closeModal({ name: modals.changePassword }));
-      dispatch(openModal({ name: modals.userInfo }));
-    }
+    dispatch(closeModal({ name: modals.changePassword }));
+    dispatch(openModal({ name: modals.userInfo }));
   };
 
   return (
@@ -60,6 +62,8 @@ const Content: React.FC = () => {
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Change Password</h1>
         <p className="text-gray-600 dark:text-gray-400">Update your password</p>
       </div>
+
+      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
 
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(handleSaveChanges)} className="space-y-6">
