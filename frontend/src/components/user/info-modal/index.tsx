@@ -5,14 +5,10 @@ import { useState } from 'react';
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
 import { closeModal, openModal } from '@/store/slices/modal/slice';
-import type { UserState } from '@/store/slices/user/types';
 import AccountStatus from './account-status';
 import { makeRequest } from '@/utils/api/make-request';
 import { updateUser } from '@/store/slices/user/slice';
-
-export type UserProps = {
-  user: NonNullable<UserState['user']>;
-};
+import type { UserProps } from './types';
 
 const Content = ({ user }: UserProps) => {
   const dispatch = useDispatch();
