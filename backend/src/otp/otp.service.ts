@@ -136,8 +136,8 @@ export class OTPService {
     throw new BadRequestException('Invalid verification code');
   }
 
-  async hasActiveVerificationOtp(userId: string) {
-    const activeOtp = await this.prisma.userOTP.findFirst({
+  async checkHasActiveVerificationOtp(userId: string) {
+    const activeOtp = await this.prisma.userOTP.count({
       where: {
         userId,
         type: UserOTPType.VERIFICATION,
@@ -145,7 +145,7 @@ export class OTPService {
       },
     });
 
-    return !!activeOtp;
+    return activeOtp > 0;
   }
 
   @Cron(CronExpression.EVERY_MINUTE)

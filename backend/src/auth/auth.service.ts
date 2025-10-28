@@ -302,7 +302,7 @@ export class AuthService {
 
   private async syncUserStatus(user: { id: string; status: UserStatus }) {
     if (user.status === UserStatus.PENDING) {
-      const hasActiveOtp = await this.otpService.hasActiveVerificationOtp(
+      const hasActiveOtp = await this.otpService.checkHasActiveVerificationOtp(
         user.id,
       );
       if (!hasActiveOtp) {
@@ -314,7 +314,7 @@ export class AuthService {
     }
 
     if (user.status === UserStatus.UNVERIFIED) {
-      const hasActiveOtp = await this.otpService.hasActiveVerificationOtp(
+      const hasActiveOtp = await this.otpService.checkHasActiveVerificationOtp(
         user.id,
       );
       if (hasActiveOtp) {
