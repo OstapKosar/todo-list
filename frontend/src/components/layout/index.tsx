@@ -1,15 +1,8 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import MainNavigation from '@/components/header';
 import Footer from '@/components/footer';
 
 const Layout = () => {
-  const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/sign-up';
-
-  if (isAuthPage) {
-    return <Outlet />;
-  }
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <MainNavigation />
