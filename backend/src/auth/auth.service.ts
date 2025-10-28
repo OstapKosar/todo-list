@@ -23,6 +23,7 @@ import { jwtTokenOptionsByType } from './constants/jwt.constants';
 import { SendForgotPasswordOtpBodyDto } from './dto/forgot-password/send-otp/send-otp.body-dto';
 import { VerifyForgotPasswordOtpBodyDto } from './dto/forgot-password/verify-otp/verify-otp.body-dto';
 import { ResetPasswordBodyDto } from './dto/forgot-password/reset-password/reset-password.body-dto';
+import { ChangePasswordBodyDto } from './dto/change-password/change-password.body-dto';
 
 @Injectable()
 export class AuthService {
@@ -269,6 +270,34 @@ export class AuthService {
     return {
       message: 'Password reset successfully',
     };
+  }
+
+  async changePassword(dto: ChangePasswordBodyDto, userId: string) {
+    const { currentPassword, newPassword } = dto;
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+    if (!isValidPassword) {
+      throw new UnauthorizedException('Invalid current password');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedNewPassword },
+    });
+
+    return { message: 'Password changed successfully' };
   }
 
   private async updateUserStatusIfNeeded(user: {
