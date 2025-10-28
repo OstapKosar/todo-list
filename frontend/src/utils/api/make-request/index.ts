@@ -32,7 +32,8 @@ const isAuthRequest = (config?: AxiosRequestConfig) =>
     config.url.includes('/auth/request-new-otp') ||
     config.url.includes('/auth/forgot-password') ||
     config.url.includes('/auth/verify-forgot-password-otp') ||
-    config.url.includes('/auth/reset-password'));
+    config.url.includes('/auth/reset-password') ||
+    config.url.includes('/auth/change-password'));
 
 api.interceptors.response.use(
   (res) => res,
