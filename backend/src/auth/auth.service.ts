@@ -137,7 +137,7 @@ export class AuthService {
         throw new UnauthorizedException('Invalid password');
       }
 
-      const updatedUser = await this.updateUserStatusIfNeeded(user);
+      const updatedUser = await this.syncUserStatus(user);
 
       const { accessToken, refreshToken } = await this.createTokenPair(user);
       this.setTokenCookie(res, accessToken, 'access');
@@ -239,7 +239,7 @@ export class AuthService {
 
     await this.otpService.emailVerificationOrResetPassword(user, type);
 
-    const updatedUser = await this.updateUserStatusIfNeeded(user);
+    const updatedUser = await this.syncUserStatus(user);
 
     return {
       message: 'New OTP sent successfully!',
@@ -300,10 +300,7 @@ export class AuthService {
     return { message: 'Password changed successfully' };
   }
 
-  private async updateUserStatusIfNeeded(user: {
-    id: string;
-    status: UserStatus;
-  }) {
+  private async syncUserStatus(user: { id: string; status: UserStatus }) {
     if (user.status === UserStatus.PENDING) {
       const hasActiveOtp = await this.otpService.hasActiveVerificationOtp(
         user.id,
@@ -346,7 +343,7 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
 
-    const updatedUser = await this.updateUserStatusIfNeeded(user);
+    const updatedUser = await this.syncUserStatus(user);
 
     return {
       id: user.id,
