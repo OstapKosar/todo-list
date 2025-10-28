@@ -17,6 +17,7 @@ import { RequestNewOtpBodyDto } from './dto/request-new-otp/request-new-otp.body
 import { SendForgotPasswordOtpBodyDto } from './dto/forgot-password/send-otp/send-otp.body-dto';
 import { VerifyForgotPasswordOtpBodyDto } from './dto/forgot-password/verify-otp/verify-otp.body-dto';
 import { ResetPasswordBodyDto } from './dto/forgot-password/reset-password/reset-password.body-dto';
+import { ChangePasswordBodyDto } from './dto/change-password/change-password.body-dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -71,6 +72,15 @@ export class AuthController {
   @Post('request-new-otp')
   async requestNewOtp(@Body() dto: RequestNewOtpBodyDto) {
     return await this.authService.requestNewOtp(dto);
+  }
+
+  @Post('change-password')
+  @UseGuards(JwtGuard('access'))
+  async changePassword(
+    @Body() dto: ChangePasswordBodyDto,
+    @Context('uid') userId: string,
+  ) {
+    return await this.authService.changePassword(dto, userId);
   }
 
   @Post('refresh')

@@ -13,7 +13,7 @@ import {
 } from '@nestjs/swagger';
 
 import { ProjectTaskModel } from 'src/tasks/models/project-task.model';
-import { UserModel } from 'src/users/models/user.model';
+import { UserModel } from 'src/user/models/user.model';
 import { IdDto } from 'src/common/dto/id.dto';
 import { DatabaseDateFieldsDto } from 'src/common/dto/database-date-fields.dto';
 

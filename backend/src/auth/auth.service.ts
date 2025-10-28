@@ -12,7 +12,7 @@ import { User, UserOTPType, UserStatus } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { SignUpBodyDto } from './dto/sign-up/sign-up.body-dto';
 import { LoginBodyDto } from './dto/login/login.body-dto';
-import { UsersService } from 'src/users/users.service';
+import { UserService } from 'src/user/user.service';
 import { AuthJwtService } from 'src/jwt/jwt.service';
 import { OTPService } from 'src/otp/otp.service';
 import { MailService } from 'src/mail/mail.service';
@@ -23,12 +23,13 @@ import { jwtTokenOptionsByType } from './constants/jwt.constants';
 import { SendForgotPasswordOtpBodyDto } from './dto/forgot-password/send-otp/send-otp.body-dto';
 import { VerifyForgotPasswordOtpBodyDto } from './dto/forgot-password/verify-otp/verify-otp.body-dto';
 import { ResetPasswordBodyDto } from './dto/forgot-password/reset-password/reset-password.body-dto';
+import { ChangePasswordBodyDto } from './dto/change-password/change-password.body-dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
     private readonly jwtService: AuthJwtService,
     private readonly otpService: OTPService,
     private readonly mailService: MailService,
@@ -68,7 +69,7 @@ export class AuthService {
   }
 
   async signup(dto: SignUpBodyDto, res: Response) {
-    const user = await this.usersService.findUserByEmail(dto.email);
+    const user = await this.userService.findUserByEmail(dto.email);
 
     if (user) {
       throw new ConflictException('User with this email already exists');
@@ -107,7 +108,7 @@ export class AuthService {
   }
 
   async validateUser(dto: { email: string; password: string }) {
-    const user = await this.usersService.findUserByEmail(dto.email);
+    const user = await this.userService.findUserByEmail(dto.email);
 
     if (!user) {
       return null;
@@ -126,7 +127,7 @@ export class AuthService {
     const { email, password } = dto;
 
     try {
-      const user = await this.usersService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw new NotFoundException('User not found');
       }
@@ -136,27 +137,7 @@ export class AuthService {
         throw new UnauthorizedException('Invalid password');
       }
 
-      if (user.status === UserStatus.UNVERIFIED) {
-        const updatedUser = await this.prisma.user.update({
-          where: { id: user.id },
-          data: { status: UserStatus.PENDING },
-        });
-
-        const { accessToken, refreshToken } =
-          await this.createTokenPair(updatedUser);
-
-        this.setTokenCookie(res, accessToken, 'access');
-        this.setTokenCookie(res, refreshToken, 'refresh');
-
-        return {
-          user: {
-            id: updatedUser.id,
-            email: updatedUser.email,
-            name: updatedUser.name,
-            status: updatedUser.status,
-          },
-        };
-      }
+      const updatedUser = await this.syncUserStatus(user);
 
       const { accessToken, refreshToken } = await this.createTokenPair(user);
       this.setTokenCookie(res, accessToken, 'access');
@@ -167,7 +148,7 @@ export class AuthService {
           id: user.id,
           email: user.email,
           name: user.name,
-          status: user.status,
+          status: updatedUser.status,
         },
       };
     } catch (err) {
@@ -188,7 +169,7 @@ export class AuthService {
   ) {
     const { email } = dto;
 
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -251,20 +232,30 @@ export class AuthService {
 
   async requestNewOtp(dto: RequestNewOtpBodyDto) {
     const { email, type } = dto;
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
     await this.otpService.emailVerificationOrResetPassword(user, type);
 
-    return { message: 'New OTP sent successfully!' };
+    const updatedUser = await this.syncUserStatus(user);
+
+    return {
+      message: 'New OTP sent successfully!',
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        status: updatedUser.status,
+      },
+    };
   }
 
   async resetPassword(dto: ResetPasswordBodyDto) {
     const { password, email } = dto;
 
-    const user = await this.usersService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -279,6 +270,62 @@ export class AuthService {
     return {
       message: 'Password reset successfully',
     };
+  }
+
+  async changePassword(dto: ChangePasswordBodyDto, userId: string) {
+    const { currentPassword, newPassword } = dto;
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+    if (!isValidPassword) {
+      throw new UnauthorizedException('Invalid current password');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedNewPassword },
+    });
+
+    return { message: 'Password changed successfully' };
+  }
+
+  private async syncUserStatus(user: { id: string; status: UserStatus }) {
+    if (user.status === UserStatus.PENDING) {
+      const hasActiveOtp = await this.otpService.checkHasActiveVerificationOtp(
+        user.id,
+      );
+      if (!hasActiveOtp) {
+        return await this.prisma.user.update({
+          where: { id: user.id },
+          data: { status: UserStatus.UNVERIFIED },
+        });
+      }
+    }
+
+    if (user.status === UserStatus.UNVERIFIED) {
+      const hasActiveOtp = await this.otpService.checkHasActiveVerificationOtp(
+        user.id,
+      );
+      if (hasActiveOtp) {
+        return await this.prisma.user.update({
+          where: { id: user.id },
+          data: { status: UserStatus.PENDING },
+        });
+      }
+    }
+
+    return user;
   }
 
   async getUserProfile(userId: string) {
@@ -296,6 +343,13 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
 
-    return user;
+    const updatedUser = await this.syncUserStatus(user);
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      status: updatedUser.status,
+    };
   }
 }
