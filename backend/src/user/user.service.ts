@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { ChangeNameBodyDto } from './dto/change-name.body-dto';
+import { UpdateUserInfoBodyDto } from './dto/update-user-info.body-dto';
 
 @Injectable()
 export class UserService {
@@ -12,8 +12,8 @@ export class UserService {
     });
   }
 
-  async changeName(dto: ChangeNameBodyDto) {
-    const { userId, name } = dto;
+  async updateUserInfo(dto: UpdateUserInfoBodyDto, userId: string) {
+    const { name } = dto;
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
@@ -23,10 +23,10 @@ export class UserService {
     }
 
     await this.prisma.user.update({
-      where: { id: user.id },
-      data: { name },
+      where: { id: userId },
+      data: { name: name.trim() },
     });
 
-    return { message: 'Name changed successfully' };
+    return { message: 'User info updated successfully' };
   }
 }

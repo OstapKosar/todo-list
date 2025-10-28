@@ -38,7 +38,7 @@ const Content = ({ user }: UserProps) => {
 
     setIsSubmitting(true);
     try {
-      await makeRequest('/user/change-name', 'POST', { userId: user.id, name: nameValue });
+      await makeRequest('/user/update-user-info', 'PATCH', { name: nameValue });
 
       dispatch(updateUser({ name: nameValue }));
 
