@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux';
 
 import type { RootState } from '@/store/store';
 import { cn } from '@/utils/tailwind';
-
-type TextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
+import type { TextSize } from './types';
 
 const AccountStatus = ({ textSize = 'lg' }: { textSize: TextSize }) => {
   const { user } = useSelector((state: RootState) => state.user);
