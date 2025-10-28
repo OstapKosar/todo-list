@@ -4,5 +4,5 @@ export const modals = {
   projectTasks: 'project-tasks',
   taskDetails: 'task-details',
   userInfo: 'user-info',
-  editUser: 'edit-user',
+  changePassword: 'change-password',
 };

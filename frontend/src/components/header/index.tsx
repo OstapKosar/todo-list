@@ -5,7 +5,7 @@ import type { RootState } from '../../store/store';
 import { setTheme } from '../../store/slices/theme/slice';
 import UserMenuDropdown from '../user/menu-dropdown';
 import UserInfoModal from '../user/info-modal';
-import EditUserModal from '../user/edit-modal';
+import ChangePasswordModal from '../user/change-password-modal';
 import HeaderLogo from '../logo/header-logo';
 import { toast } from 'react-toastify';
 
@@ -67,7 +67,7 @@ const MainNavigation = () => {
         </div>
       </header>
       {user && <UserInfoModal user={user} />}
-      <EditUserModal />
+      <ChangePasswordModal />
     </>
   );
 };

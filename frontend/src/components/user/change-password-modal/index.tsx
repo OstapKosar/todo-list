@@ -9,15 +9,15 @@ import Input from '@/components/form/input';
 import { modals } from '@/constants/modals';
 import { closeModal, openModal } from '@/store/slices/modal/slice';
 import { updateUser } from '@/store/slices/user/slice';
-import { editUserSchema } from './validation';
-import type { EditUserForm } from './types';
+import { changePasswordSchema } from './validation';
+import type { ChangePasswordForm } from './types';
 
 const Content: React.FC = () => {
   const dispatch = useDispatch();
 
-  const form = useForm<EditUserForm>({
-    resolver: zodResolver(editUserSchema),
-    defaultValues: { name: '', email: '', password: '' },
+  const form = useForm<ChangePasswordForm>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: { currentPassword: '', newPassword: '' },
   });
 
   const {
@@ -26,13 +26,13 @@ const Content: React.FC = () => {
     reset,
   } = form;
 
-  const handleSaveChanges = async (data: EditUserForm) => {
+  const handleSaveChanges = async (data: ChangePasswordForm) => {
     try {
       dispatch(updateUser(data));
 
       toast.success('Profile updated successfully!');
 
-      dispatch(closeModal({ name: modals.editUser }));
+      dispatch(closeModal({ name: modals.changePassword }));
       dispatch(openModal({ name: modals.userInfo }));
 
       reset();
@@ -45,11 +45,11 @@ const Content: React.FC = () => {
   const handleCancel = () => {
     if (isDirty) {
       if (window.confirm('You have unsaved changes. Are you sure you want to cancel?')) {
-        dispatch(closeModal({ name: modals.editUser }));
+        dispatch(closeModal({ name: modals.changePassword }));
         dispatch(openModal({ name: modals.userInfo }));
       }
     } else {
-      dispatch(closeModal({ name: modals.editUser }));
+      dispatch(closeModal({ name: modals.changePassword }));
       dispatch(openModal({ name: modals.userInfo }));
     }
   };
@@ -57,16 +57,20 @@ const Content: React.FC = () => {
   return (
     <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-200 dark:border-gray-700">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Edit Profile</h1>
-        <p className="text-gray-600 dark:text-gray-400">Update your personal information</p>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Change Password</h1>
+        <p className="text-gray-600 dark:text-gray-400">Update your password</p>
       </div>
 
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(handleSaveChanges)} className="space-y-6">
           <div className="space-y-4">
-            <Input label="Full Name" name="name" type="text" placeholder="Enter your full name" />
-            <Input label="Email Address" name="email" type="email" placeholder="Enter your email address" />
-            <Input label="Password" name="password" type="password" placeholder="Enter new password (optional)" />
+            <Input
+              label="Current Password"
+              name="currentPassword"
+              type="password"
+              placeholder="Enter your current password"
+            />
+            <Input label="New Password" name="newPassword" type="password" placeholder="Enter your new password" />
           </div>
 
           <div className="flex gap-3 pt-4">
@@ -98,12 +102,12 @@ const Content: React.FC = () => {
   );
 };
 
-const EditUserModal = () => {
+const ChangePasswordModal = () => {
   return (
-    <Modal modalName={modals.editUser}>
+    <Modal modalName={modals.changePassword}>
       <Content />
     </Modal>
   );
 };
 
-export default EditUserModal;
+export default ChangePasswordModal;
