@@ -63,10 +63,10 @@ const Content: React.FC = () => {
         <p className="text-gray-600 dark:text-gray-400">Update your password</p>
       </div>
 
-      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
-
       <FormProvider {...form}>
-        <form onSubmit={handleSubmit(handleSaveChanges)} className="space-y-6">
+        <form onSubmit={handleSubmit(handleSaveChanges)} className="space-y-4">
+          {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+
           <div className="space-y-4">
             <Input
               label="Current Password"
