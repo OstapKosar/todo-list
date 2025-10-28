@@ -90,7 +90,7 @@ const VerifyEmailPage = () => {
         type: 'VERIFICATION',
       });
 
-      toast.success('New OTP code has been sent to your email!');
+      toast.success('New verification code has been sent to your email!');
       restart(new Date(Date.now() + oneMinuteInMilliseconds), true);
     } catch (err) {
       setErrorMessage(extractErrorMessage(err));

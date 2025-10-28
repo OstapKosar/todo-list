@@ -91,7 +91,7 @@ export class OTPService {
 
     if (!otpCodes.length) {
       throw new BadRequestException(
-        'No OTP code found, please request a new one',
+        'No verification code found, please request a new one',
       );
     }
 
@@ -116,7 +116,7 @@ export class OTPService {
 
     if (expiredOtp) {
       throw new BadRequestException(
-        'OTP code is expired, please request a new one',
+        'Verification code is expired, please request a new one',
       );
     }
 
@@ -129,11 +129,11 @@ export class OTPService {
 
     if (usedOtp) {
       throw new BadRequestException(
-        'OTP code has already been used, please request a new one',
+        'Verification code has already been used, please request a new one',
       );
     }
 
-    throw new BadRequestException('Invalid OTP code');
+    throw new BadRequestException('Invalid verification code');
   }
 
   @Cron(CronExpression.EVERY_MINUTE)

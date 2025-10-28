@@ -6,7 +6,7 @@ export class VerifyForgotPasswordOtpBodyDto {
   @IsString()
   @IsNotEmpty()
   @Length(6, 6, {
-    message: 'OTP code must be exactly 6 characters long',
+    message: 'Verification code must be exactly 6 characters long',
   })
   code: string;
 
