@@ -16,10 +16,12 @@ const Content = () => {
   };
 
   const handleDeleteProject = () => {
-    dispatch(removeProject({ id: payload.projectId }));
+    const projectId = (payload as { projectId: string }).projectId;
+    dispatch(removeProject({ id: projectId }));
     dispatch(closeModal({ name: modals.deleteProject }));
     navigate('/dashboard');
-    console.log(`removing project: ${payload.projectId}`);
+
+    console.log(`removing project: ${projectId}`);
   };
 
   return (

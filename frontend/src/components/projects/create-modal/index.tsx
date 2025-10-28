@@ -1,15 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { addProject } from '@/store/slices/projects/slice';
 import { closeModal } from '@/store/slices/modal/slice';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@/components/form/input';
 import Textarea from '@/components/form/textarea';
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
-import { createProjectSchema, type CreateProjectForm } from './validation';
+import { createProjectSchema } from './validation';
+import type { CreateProjectForm } from './types';
 
 const Content: React.FC = () => {
   const dispatch = useDispatch();

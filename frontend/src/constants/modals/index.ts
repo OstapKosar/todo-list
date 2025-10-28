@@ -3,4 +3,6 @@ export const modals = {
   deleteProject: 'delete-project',
   projectTasks: 'project-tasks',
   taskDetails: 'task-details',
+  userInfo: 'user-info',
+  editUser: 'edit-user',
 };
