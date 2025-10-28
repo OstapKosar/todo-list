@@ -4,7 +4,7 @@ import Footer from '@/components/footer';
 
 const Layout = () => {
   const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/sign-up';
 
   if (isAuthPage) {
     return <Outlet />;

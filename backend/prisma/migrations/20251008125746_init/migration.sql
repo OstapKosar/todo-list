@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "project_task_status" AS ENUM ('TODO', 'IN_PROGRESS', 'COMPLETED');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
@@ -29,7 +32,7 @@ CREATE TABLE "project_tasks" (
     "description" TEXT,
     "urgency" INTEGER NOT NULL,
     "importance" INTEGER NOT NULL,
-    "isCompleted" BOOLEAN NOT NULL DEFAULT false,
+    "isCompleted" "project_task_status" NOT NULL DEFAULT 'TODO',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "projectId" TEXT NOT NULL,

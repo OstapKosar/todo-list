@@ -5,12 +5,12 @@ import { useState } from 'react';
 import { formElementClasses } from '@/utils/form-element-classes';
 import { cn } from '@/utils/tailwind';
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
   name: string;
   placeholder: string;
   maxLength?: number;
-}
+};
 
 const Textarea = ({ label, name, placeholder, maxLength = 200, ...props }: TextareaProps) => {
   const { register, formState } = useFormContext();

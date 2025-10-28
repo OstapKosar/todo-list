@@ -16,5 +16,3 @@ export const signupSchema = z
       });
     }
   });
-
-export type SignupForm = z.infer<typeof signupSchema>;

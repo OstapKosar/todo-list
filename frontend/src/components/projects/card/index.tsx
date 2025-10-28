@@ -5,13 +5,13 @@ import MatrixPreview from '@/components/matrix/matrix-preview';
 import { openModal } from '@/store/slices/modal/slice';
 import { modals } from '@/constants/modals';
 
-interface ProjectCardProps {
+type ProjectCardProps = {
   project: {
     id: number;
     name: string;
     description: string;
   };
-}
+};
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const dispatch = useDispatch();
