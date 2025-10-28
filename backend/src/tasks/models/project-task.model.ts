@@ -1,12 +1,10 @@
 import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsNotEmpty,
-  IsNumber,
   IsString,
   IsUUID,
-  Max,
-  Min,
   ValidateNested,
 } from 'class-validator';
 import { ProjectTaskStatus } from '@prisma/client';
@@ -30,18 +28,14 @@ export class ProjectTaskModel extends IntersectionType(
   description: string;
 
   @ApiProperty()
-  @IsNumber()
-  @Min(1)
-  @Max(10)
+  @IsBoolean()
   @IsNotEmpty()
-  urgency: number;
+  urgency: boolean;
 
   @ApiProperty()
-  @IsNumber()
-  @Min(1)
-  @Max(10)
+  @IsBoolean()
   @IsNotEmpty()
-  importance: number;
+  importance: boolean;
 
   @ApiProperty({ enum: ProjectTaskStatus })
   @IsNotEmpty()

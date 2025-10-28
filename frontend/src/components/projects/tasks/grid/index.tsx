@@ -1,10 +1,10 @@
 import { tasks } from '@/constants/demo-data';
 
 const ProjectTasksGrid = () => {
-  const importantButNotUrgent = tasks.filter((task) => task.importance > 5 && task.urgency < 5);
-  const urgentAndImportant = tasks.filter((task) => task.importance > 5 && task.urgency > 5);
-  const notImportantAndNotUrgent = tasks.filter((task) => task.importance < 5 && task.urgency < 5);
-  const notImportantButUrgent = tasks.filter((task) => task.importance < 5 && task.urgency > 5);
+  const importantButNotUrgent = tasks.filter((task) => task.importance && !task.urgency);
+  const urgentAndImportant = tasks.filter((task) => task.importance && task.urgency);
+  const notImportantAndNotUrgent = tasks.filter((task) => !task.importance && !task.urgency);
+  const notImportantButUrgent = tasks.filter((task) => !task.importance && task.urgency);
 
   return (
     <div className="grid grid-cols-2 gap-4 h-full max-h-1/2 overflow-hidden">
