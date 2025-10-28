@@ -13,16 +13,14 @@ const Modal: React.FC<ModalProps> = ({ children, modalName }) => {
   const { isOpened, modalName: currentModalName } = useSelector(selectModal);
 
   useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
-
     if (isOpened) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = originalOverflow;
+      document.body.style.overflow = 'auto';
     }
 
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.body.style.overflow = 'auto';
     };
   }, [isOpened]);
 
