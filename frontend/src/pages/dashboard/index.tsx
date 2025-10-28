@@ -1,14 +1,16 @@
 import { projects } from '@/constants/demo-data';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ProjectCard from '@/components/projects/card';
 import CreateProjectModal from '@/components/projects/create-modal';
 import DeleteProjectModal from '@/components/projects/delete-modal';
 import { openModal } from '@/store/slices/modal/slice';
 import { modals } from '@/constants/modals';
+import type { RootState } from '@/store/store';
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.user);
 
   const handleCreateProject = () => {
     dispatch(openModal({ name: modals.createProject }));
@@ -19,7 +21,7 @@ const DashboardPage = () => {
       <CreateProjectModal />
       <DeleteProjectModal />
       <div className="flex justify-between items-center mb-2">
-        <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">Your Projects</h1>
+        <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">{user?.name} Projects</h1>
         <button
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
           onClick={handleCreateProject}
