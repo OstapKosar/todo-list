@@ -20,8 +20,6 @@ const Content = () => {
     dispatch(removeProject({ id: projectId }));
     dispatch(closeModal({ name: modals.deleteProject }));
     navigate('/dashboard');
-
-    console.log(`removing project: ${projectId}`);
   };
 
   return (
