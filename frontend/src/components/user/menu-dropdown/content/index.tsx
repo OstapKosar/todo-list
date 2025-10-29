@@ -1,11 +1,6 @@
-import React from 'react';
+import type { DropdownContentProps } from './types';
 
-type DropdownContentProps = {
-  children: React.ReactNode;
-  open: boolean;
-};
-
-const DropdownContent: React.FC<DropdownContentProps> = ({ children, open }) => {
+const DropdownContent = ({ children, open }: DropdownContentProps) => {
   if (!open) return null;
 
   return (

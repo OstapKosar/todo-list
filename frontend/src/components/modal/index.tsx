@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 
 import { selectModal } from '@/store/slices/modal/selectors';
+import type { ModalProps } from './types';
 
-type ModalProps = {
-  children: React.ReactNode;
-  modalName: string;
-};
-
-const Modal: React.FC<ModalProps> = ({ children, modalName }) => {
+const Modal = ({ children, modalName }: ModalProps) => {
   const { isOpened, modalName: currentModalName } = useSelector(selectModal);
 
   useEffect(() => {

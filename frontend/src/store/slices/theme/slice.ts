@@ -1,11 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Theme } from './types';
 
-type ThemeState = {
-  theme: Theme;
-};
-
-const initialState: ThemeState = {
+const initialState: { theme: Theme } = {
   theme: (() => {
     const savedTheme = localStorage.getItem('theme');
     const isDark =

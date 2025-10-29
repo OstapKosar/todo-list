@@ -2,16 +2,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import MatrixPreview from '@/components/matrix/matrix-preview';
-import { openModal } from '@/store/slices/modal/slice';
 import { modals } from '@/constants/modals';
-
-type ProjectCardProps = {
-  project: {
-    id: number;
-    name: string;
-    description: string;
-  };
-};
+import { openModal } from '@/store/slices/modal/slice';
+import type { ProjectCardProps } from './types';
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const dispatch = useDispatch();

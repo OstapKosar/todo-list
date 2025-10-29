@@ -1,11 +1,6 @@
-import React from 'react';
+import type { DropdownItemProps } from './types';
 
-type DropdownItemProps = {
-  children: React.ReactNode;
-  onClick: () => void;
-};
-
-const DropdownItem: React.FC<DropdownItemProps> = ({ children, onClick }) => {
+const DropdownItem = ({ children, onClick }: DropdownItemProps) => {
   return (
     <div>
       <button
