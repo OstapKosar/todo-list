@@ -4,6 +4,7 @@ import projectsReducer from './slices/projects/slice';
 import modalReducer from './slices/modal/slice';
 import authReducer from './slices/auth/slice';
 import userReducer from './slices/user/slice';
+import globalLoadingReducer from './slices/global-loading/slice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     modal: modalReducer,
     auth: authReducer,
     user: userReducer,
+    globalLoading: globalLoadingReducer,
   },
 });
 
