@@ -1,8 +1,10 @@
-import type { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 
+import { useGlobalLoading } from '@/hooks/useGlobalLoading';
+import type { RootState } from '@/store/store';
+
 const GlobalLoader = () => {
-  const isLoading = useSelector((state: RootState) => state.globalLoading.isLoading);
+  const isLoading = useGlobalLoading();
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   if (!isLoading) return null;
