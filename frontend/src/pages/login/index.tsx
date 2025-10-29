@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from 'react-redux';
 
 import Input from '@/components/form/input';
+import PasswordInput from '@/components/form/password-input';
 import { loginSchema } from './validation';
 import type { LoginForm } from './types';
 import { extractErrorMessage } from '@/utils/errors';
@@ -76,7 +77,7 @@ const LoginPage = () => {
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
           <Input label="Email Address" name="email" type="email" placeholder="Enter your email" />
-          <Input label="Password" name="password" type="password" placeholder="Enter your password" />
+          <PasswordInput label="Password" name="password" placeholder="Enter your password" />
 
           <div className="flex items-center justify-between">
             <div className="text-sm">

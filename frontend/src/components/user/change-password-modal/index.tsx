@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FiLoader } from 'react-icons/fi';
 
 import Modal from '@/components/modal';
-import Input from '@/components/form/input';
+import PasswordInput from '@/components/form/password-input';
 import { modals } from '@/constants/modals';
 import { closeModal, openModal } from '@/store/slices/modal/slice';
 import { changePasswordSchema } from './validation';
@@ -68,13 +68,8 @@ const Content: React.FC = () => {
           {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
 
           <div className="space-y-4">
-            <Input
-              label="Current Password"
-              name="currentPassword"
-              type="password"
-              placeholder="Enter your current password"
-            />
-            <Input label="New Password" name="newPassword" type="password" placeholder="Enter your new password" />
+            <PasswordInput label="Current Password" name="currentPassword" placeholder="Enter your current password" />
+            <PasswordInput label="New Password" name="newPassword" placeholder="Enter your new password" />
           </div>
 
           <div className="flex gap-3 pt-4">

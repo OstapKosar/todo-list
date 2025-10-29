@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import Input from '@/components/form/input';
+import PasswordInput from '@/components/form/password-input';
 import ErrorMessage from '@/components/error-message';
 import { extractErrorMessage } from '@/utils/errors';
 import { makeRequest } from '@/utils/api/make-request';
@@ -63,13 +63,8 @@ const NewPasswordPage = () => {
 
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 mt-4">
-          <Input label="New Password" name="password" type="password" placeholder="Enter your new password" />
-          <Input
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm your new password"
-          />
+          <PasswordInput label="New Password" name="password" placeholder="Enter your new password" />
+          <PasswordInput label="Confirm Password" name="confirmPassword" placeholder="Confirm your new password" />
 
           <button
             type="submit"

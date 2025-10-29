@@ -6,13 +6,14 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import Input from '@/components/form/input';
-import { signupSchema } from './validation';
-import type { SignupForm } from './types';
-import { extractErrorMessage } from '@/utils/errors';
-import ErrorMessage from '@/components/error-message';
-import { makeRequest } from '@/utils/api/make-request';
+import PasswordInput from '@/components/form/password-input';
 import { setUser } from '@/store/slices/user/slice';
 import { setIsAuthenticated } from '@/store/slices/auth/slice';
+import { makeRequest } from '@/utils/api/make-request';
+import { extractErrorMessage } from '@/utils/errors';
+import { signupSchema } from './validation';
+import type { SignupForm } from './types';
+import ErrorMessage from '@/components/error-message';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -64,8 +65,8 @@ const SignupPage = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
           <Input label="Full Name" name="name" type="text" placeholder="Enter your full name" />
           <Input label="Email Address" name="email" type="email" placeholder="Enter your email" />
-          <Input label="Password" name="password" type="password" placeholder="Create a password" />
-          <Input label="Confirm Password" name="confirmPassword" type="password" placeholder="Confirm your password" />
+          <PasswordInput label="Password" name="password" placeholder="Create a password" />
+          <PasswordInput label="Confirm Password" name="confirmPassword" placeholder="Confirm your password" />
 
           <div className="flex space-x-4 mt-8">
             <button
