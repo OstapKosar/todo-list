@@ -1,16 +1,9 @@
-import type { TextareaHTMLAttributes } from 'react';
 import { get, useFormContext } from 'react-hook-form';
 import { useState } from 'react';
 
-import { formElementClasses } from '@/utils/form-element-classes';
+import type { TextareaProps } from './types';
 import { cn } from '@/utils/tailwind';
-
-type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  label: string;
-  name: string;
-  placeholder: string;
-  maxLength?: number;
-};
+import { formElementClasses } from '@/utils/form-element-classes';
 
 const Textarea = ({ label, name, placeholder, maxLength = 200, ...props }: TextareaProps) => {
   const { register, formState } = useFormContext();

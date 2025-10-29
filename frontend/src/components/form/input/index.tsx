@@ -1,14 +1,8 @@
-import type { InputHTMLAttributes } from 'react';
 import { get, useFormContext } from 'react-hook-form';
-import { formElementClasses } from '@/utils/form-element-classes';
-import { cn } from '@/utils/tailwind';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
-  name: string;
-  type: string;
-  placeholder: string;
-};
+import type { InputProps } from './types';
+import { cn } from '@/utils/tailwind';
+import { formElementClasses } from '@/utils/form-element-classes';
 
 const Input = ({ label, name, type, placeholder, ...props }: InputProps) => {
   const { register, formState } = useFormContext();

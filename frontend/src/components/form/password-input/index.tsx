@@ -1,15 +1,10 @@
-import { useState, type InputHTMLAttributes } from 'react';
+import { useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
+import type { PasswordInputProps } from './types';
 import { cn } from '@/utils/tailwind';
 import { get, useFormContext } from 'react-hook-form';
 import { formElementClasses } from '@/utils/form-element-classes';
-
-type PasswordInputProps = {
-  label: string;
-  name: string;
-  placeholder: string;
-} & InputHTMLAttributes<HTMLInputElement>;
 
 const PasswordInput = ({ label, name, placeholder, ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
