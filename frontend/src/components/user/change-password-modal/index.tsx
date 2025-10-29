@@ -16,7 +16,7 @@ import type { RootState } from '@/store/store';
 import { useState } from 'react';
 import ErrorMessage from '@/components/error-message';
 
-const Content: React.FC = () => {
+const Content = () => {
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

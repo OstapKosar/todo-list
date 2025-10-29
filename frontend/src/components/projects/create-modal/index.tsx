@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +11,7 @@ import { modals } from '@/constants/modals';
 import { createProjectSchema } from './validation';
 import type { CreateProjectForm } from './types';
 
-const Content: React.FC = () => {
+const Content = () => {
   const dispatch = useDispatch();
 
   const form = useForm<CreateProjectForm>({
@@ -68,7 +67,7 @@ const Content: React.FC = () => {
   );
 };
 
-const CreateProjectModal: React.FC = () => {
+const CreateProjectModal = () => {
   return (
     <Modal modalName={modals.createProject}>
       <Content />
