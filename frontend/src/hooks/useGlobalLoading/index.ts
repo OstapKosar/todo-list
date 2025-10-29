@@ -6,7 +6,5 @@ export const useGlobalLoading = () => {
   const userLoading = useSelector((state: RootState) => state.user.loading);
   const projectsLoading = useSelector((state: RootState) => state.projects.loading);
 
-  const isLoading = userLoading || projectsLoading;
-
-  return isLoading;
+  return userLoading || projectsLoading;
 };
