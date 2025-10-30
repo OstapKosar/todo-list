@@ -1,25 +1,40 @@
-import Modal from '@/components/modal';
-import { modals } from '@/constants/modals';
-import { removeProject } from '@/store/slices/projects/slice';
-import { closeModal } from '@/store/slices/modal/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import Modal from '@/components/modal';
+import { modals } from '@/constants/modals';
+import { closeModal } from '@/store/slices/modal/slice';
 import { selectModal } from '@/store/slices/modal/selectors';
+import { makeRequest } from '@/utils/api/make-request';
+import { extractErrorMessage } from '@/utils/errors';
+import { getAllProjects } from '@/store/slices/projects/thunk';
+import type { AppDispatch } from '@/store/store';
 
 const Content = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { payload } = useSelector(selectModal);
 
   const handleCloseModal = () => {
     dispatch(closeModal({ name: modals.deleteProject }));
   };
 
-  const handleDeleteProject = () => {
+  const handleDeleteProject = async () => {
     const projectId = (payload as { projectId: string }).projectId;
-    dispatch(removeProject({ id: projectId }));
-    dispatch(closeModal({ name: modals.deleteProject }));
-    navigate('/dashboard');
+
+    try {
+      await makeRequest(`/projects/${projectId}`, 'DELETE');
+
+      dispatch(getAllProjects());
+      toast.success('Project deleted successfully!');
+
+      dispatch(closeModal({ name: modals.deleteProject }));
+
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(extractErrorMessage(error));
+    }
   };
 
   return (

@@ -1,39 +1,55 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
 
-import { addProject } from '@/store/slices/projects/slice';
 import { closeModal } from '@/store/slices/modal/slice';
 import Input from '@/components/form/input';
 import Textarea from '@/components/form/textarea';
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
 import { createProjectSchema } from './validation';
+import { makeRequest } from '@/utils/api/make-request';
+import { extractErrorMessage } from '@/utils/errors';
+import ErrorMessage from '@/components/error-message';
+import { getAllProjects } from '@/store/slices/projects/thunk';
+import type { AppDispatch } from '@/store/store';
 import type { CreateProjectForm } from './types';
 
 const Content = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm<CreateProjectForm>({
     resolver: zodResolver(createProjectSchema),
     defaultValues: { name: '', description: '' },
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-    reset,
-  } = form;
+  const { handleSubmit } = form;
 
-  const onSubmit = (data: CreateProjectForm) => {
-    dispatch(addProject({ id: Date.now(), name: data.name, description: data.description ?? '', tasks: [] }));
-    dispatch(closeModal({ name: modals.createProject }));
-    reset();
+  const onSubmit = async () => {
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      await makeRequest('/projects', 'POST', form.getValues());
+
+      dispatch(getAllProjects());
+      toast.success('Project created successfully!');
+
+      dispatch(closeModal({ name: modals.createProject }));
+    } catch (error) {
+      setErrorMessage(extractErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCloseModal = () => {
     dispatch(closeModal({ name: modals.createProject }));
-    reset();
+    setErrorMessage(null);
   };
 
   return (
@@ -43,13 +59,14 @@ const Content = () => {
         className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md flex flex-col gap-4 border border-gray-200 dark:border-gray-700"
       >
         <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-100">Create Project</h3>
+        {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
         <Input label="Project Name" name="name" type="text" placeholder="Project Name" />
-        <Textarea label="Project Description" name="description" placeholder="Project Description" />
+        <Textarea label="Project Description (optional)" name="description" placeholder="Project Description" />
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-between gap-2">
           <button
             type="button"
-            className="pr-2 text-red-900 dark:text-red-200 hover:text-red-400 rounded-lg transition-colors hover:cursor-pointer"
+            className="text-gray-900 dark:text-gray-300 hover:text-gray-400 text-base rounded-lg transition-colors hover:cursor-pointer"
             onClick={handleCloseModal}
           >
             Close
