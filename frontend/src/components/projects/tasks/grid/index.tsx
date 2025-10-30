@@ -1,10 +1,10 @@
 import type { Task } from '@/store/slices/projects/types';
 
 const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
-  const importantButNotUrgent = tasks.filter((task) => task.importance && !task.urgency);
-  const urgentAndImportant = tasks.filter((task) => task.importance && task.urgency);
-  const notImportantAndNotUrgent = tasks.filter((task) => !task.importance && !task.urgency);
-  const notImportantButUrgent = tasks.filter((task) => !task.importance && task.urgency);
+  const importantButNotUrgent = tasks.filter((task) => task.important && !task.urgent);
+  const urgentAndImportant = tasks.filter((task) => task.important && task.urgent);
+  const notImportantAndNotUrgent = tasks.filter((task) => !task.important && !task.urgent);
+  const notImportantButUrgent = tasks.filter((task) => !task.important && task.urgent);
 
   return (
     <div className="grid grid-cols-2 gap-4 h-full max-h-1/2 overflow-hidden">

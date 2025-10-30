@@ -9,8 +9,8 @@ export type Task = {
   id: string;
   title: string;
   description?: string;
-  urgency: boolean;
-  importance: boolean;
+  urgent: boolean;
+  important: boolean;
   isCompleted: boolean;
 };
 

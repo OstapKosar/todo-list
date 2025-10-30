@@ -1,8 +1,13 @@
-import { ApiProperty, IntersectionType } from '@nestjs/swagger';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  IntersectionType,
+} from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   ValidateNested,
@@ -22,20 +27,20 @@ export class ProjectTaskModel extends IntersectionType(
   @IsNotEmpty()
   title: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  @IsOptional()
+  description?: string;
 
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
-  urgency: boolean;
+  urgent: boolean;
 
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
-  importance: boolean;
+  important: boolean;
 
   @ApiProperty({ enum: ProjectTaskStatus })
   @IsNotEmpty()

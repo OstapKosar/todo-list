@@ -4,6 +4,7 @@ import { ProjectTaskModel } from '../models/project-task.model';
 export class CreateProjectTaskDto extends PickType(ProjectTaskModel, [
   'title',
   'description',
-  'urgency',
-  'importance',
+  'urgent',
+  'important',
+  'projectId',
 ]) {}

@@ -5,7 +5,7 @@ export class TaskResponseDto extends PickType(ProjectTaskModel, [
   'id',
   'title',
   'description',
-  'urgency',
-  'importance',
+  'urgent',
+  'important',
   'isCompleted',
 ]) {}
