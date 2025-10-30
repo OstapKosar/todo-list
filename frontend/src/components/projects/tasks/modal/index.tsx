@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux';
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
 import { closeModal } from '@/store/slices/modal/slice';
-import { tasks } from '@/constants/demo-data';
+import type { Task } from '@/store/slices/projects/types';
+import type { AppDispatch } from '@/store/store';
 
-const Content = () => {
-  const dispatch = useDispatch();
+const Content = ({ tasks }: { tasks: Task[] }) => {
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleCloseModal = () => {
     dispatch(closeModal({ name: modals.projectTasks }));
@@ -17,12 +18,21 @@ const Content = () => {
       <div className="w-full flex flex-col items-center">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Tasks</h1>
         <div className="flex flex-col gap-3 w-full max-h-80 overflow-y-auto">
-          {tasks.map((task) => (
-            <div key={task.id} className="flex flex-col items-start bg-gray-300 dark:bg-gray-700 p-4 w-full rounded-lg">
-              <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">{task.title}</h2>
-              <p className="text-gray-700 dark:text-gray-300">{task.description}</p>
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <div
+                key={task.id}
+                className="flex flex-col items-start bg-gray-300 dark:bg-gray-700 p-4 w-full rounded-lg"
+              >
+                <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">{task.title}</h2>
+                <p className="text-gray-700 dark:text-gray-300">{task.description}</p>
+              </div>
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full">
+              <p className="text-gray-500 dark:text-gray-400">No tasks found</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
       <div className="flex w-full justify-between items-center mt-8 gap-4">
@@ -39,10 +49,10 @@ const Content = () => {
     </div>
   );
 };
-const TasksModal = () => {
+const TasksModal = ({ tasks }: { tasks: Task[] }) => {
   return (
     <Modal modalName={modals.projectTasks}>
-      <Content />
+      <Content tasks={tasks} />
     </Modal>
   );
 };

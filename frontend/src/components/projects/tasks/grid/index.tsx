@@ -1,6 +1,6 @@
-import { tasks } from '@/constants/demo-data';
+import type { Task } from '@/store/slices/projects/types';
 
-const ProjectTasksGrid = () => {
+const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
   const importantButNotUrgent = tasks.filter((task) => task.importance && !task.urgency);
   const urgentAndImportant = tasks.filter((task) => task.importance && task.urgency);
   const notImportantAndNotUrgent = tasks.filter((task) => !task.importance && !task.urgency);
