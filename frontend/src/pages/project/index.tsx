@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ProjectTasksGrid from '@/components/projects/tasks/grid';
 import TasksModal from '@/components/projects/tasks/modal';
+import CreateTaskModal from '@/components/projects/tasks/create-modal';
 import { modals } from '@/constants/modals';
 import { openModal } from '@/store/slices/modal/slice';
 import { getProject } from '@/store/slices/projects/thunk';
@@ -37,6 +38,7 @@ const ProjectDetailsPage = () => {
   return (
     <div className="p-10 min-h-screen flex justify-center items-center">
       <TasksModal tasks={project?.tasks || []} />
+      <CreateTaskModal projectId={id as string} />
       <div className="flex flex-col h-full bg-gray-200 dark:bg-gray-800 p-10 rounded-lg w-full max-w-[85%]">
         <div className="flex items-center justify-between w-full mb-6">
           <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">{project?.name}</h1>

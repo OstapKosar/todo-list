@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux';
 
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
-import { closeModal } from '@/store/slices/modal/slice';
 import type { Task } from '@/store/slices/projects/types';
 import type { AppDispatch } from '@/store/store';
+import { closeModal, openModal } from '@/store/slices/modal/slice';
 
 const Content = ({ tasks }: { tasks: Task[] }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +13,12 @@ const Content = ({ tasks }: { tasks: Task[] }) => {
     dispatch(closeModal({ name: modals.projectTasks }));
   };
 
+  const handleOpenAddTaskModal = () => {
+    dispatch(closeModal({ name: modals.projectTasks }));
+    dispatch(openModal({ name: modals.createProjectTask }));
+  };
+
+  //!!! todo: task is button and when clicked, it should open a modal with the task details
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg min-w-[350px]">
       <div className="w-full flex flex-col items-center">
@@ -20,12 +26,8 @@ const Content = ({ tasks }: { tasks: Task[] }) => {
         <div className="flex flex-col gap-3 w-full max-h-80 overflow-y-auto">
           {tasks.length > 0 ? (
             tasks.map((task) => (
-              <div
-                key={task.id}
-                className="flex flex-col items-start bg-gray-300 dark:bg-gray-700 p-4 w-full rounded-lg"
-              >
+              <div key={task.id} className="flex items-center bg-gray-300 dark:bg-gray-700 p-4 w-full rounded-lg">
                 <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">{task.title}</h2>
-                <p className="text-gray-700 dark:text-gray-300">{task.description}</p>
               </div>
             ))
           ) : (
@@ -42,7 +44,10 @@ const Content = ({ tasks }: { tasks: Task[] }) => {
         >
           Back to Project
         </button>
-        <button className="px-6 mx-3 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
+        <button
+          className="m-3 text-blue-900 dark:text-blue-200 hover:text-blue-400 rounded-lg transition-colors hover:cursor-pointer"
+          onClick={handleOpenAddTaskModal}
+        >
           Add Task
         </button>
       </div>
