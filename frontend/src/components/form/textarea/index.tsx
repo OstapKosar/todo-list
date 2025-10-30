@@ -5,7 +5,7 @@ import type { TextareaProps } from './types';
 import { cn } from '@/utils/tailwind';
 import { formElementClasses } from '@/utils/form-element-classes';
 
-const Textarea = ({ label, name, placeholder, maxLength = 200, ...props }: TextareaProps) => {
+const Textarea = ({ label, name, placeholder, maxLength = 400, ...props }: TextareaProps) => {
   const { register, formState } = useFormContext();
   const error = get(formState.errors, name);
   const [charCount, setCharCount] = useState(0);
