@@ -4,7 +4,8 @@ import type { RootState } from '@/store/store';
 
 export const useGlobalLoading = () => {
   const userLoading = useSelector((state: RootState) => state.user.loading);
-  const projectsLoading = useSelector((state: RootState) => state.projects.loading);
+  const allProjectsLoading = useSelector((state: RootState) => state.projects.allProjectsLoading);
+  const projectLoading = useSelector((state: RootState) => state.projects.projectLoading);
 
-  return userLoading || projectsLoading;
+  return userLoading || allProjectsLoading || projectLoading;
 };

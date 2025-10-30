@@ -9,11 +9,14 @@ export type Task = {
   id: string;
   title: string;
   description?: string;
-  urgency: number;
-  importance: number;
+  urgency: boolean;
+  importance: boolean;
   isCompleted: boolean;
 };
 
 export type ProjectsState = {
   projects: Project[];
+  allProjectsLoading: boolean;
+  projectLoading: boolean;
+  error: string | null;
 };
