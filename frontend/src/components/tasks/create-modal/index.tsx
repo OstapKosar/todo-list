@@ -37,7 +37,7 @@ const Content = ({ projectId }: { projectId: string }) => {
     setErrorMessage(null);
 
     try {
-      await makeRequest('/tasks/create', 'POST', { ...form.getValues(), projectId });
+      await makeRequest('/tasks', 'POST', { ...form.getValues(), projectId });
 
       dispatch(getProject(projectId));
 

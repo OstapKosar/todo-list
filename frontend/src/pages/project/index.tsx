@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ProjectTasksGrid from '@/components/projects/tasks/grid';
-import TasksModal from '@/components/projects/tasks/modal';
-import CreateTaskModal from '@/components/projects/tasks/create-modal';
+import ProjectTasksGrid from '@/components/tasks/grid';
+import TasksModal from '@/components/tasks/modal';
+import CreateTaskModal from '@/components/tasks/create-modal';
 import { modals } from '@/constants/modals';
 import { openModal } from '@/store/slices/modal/slice';
 import { getProject } from '@/store/slices/projects/thunk';

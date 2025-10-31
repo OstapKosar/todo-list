@@ -11,7 +11,7 @@ export class TasksController {
 
   @UseGuards(JwtGuard('access'))
   @ApiBearerAuth()
-  @Post('create')
+  @Post()
   createProjectTask(@Body() dto: CreateProjectTaskDto) {
     return this.tasksService.createProjectTask(dto);
   }
