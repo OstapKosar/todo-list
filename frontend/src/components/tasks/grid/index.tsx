@@ -1,10 +1,20 @@
+import { useDispatch } from 'react-redux';
+
+import { modals } from '@/constants/modals';
+import type { AppDispatch } from '@/store/store';
+import { openModal } from '@/store/slices/modal/slice';
 import type { Task } from '@/store/slices/projects/types';
+import { filterTasksByPriority } from '@/utils/tasks/priority-filter';
+import { TaskCard } from '@/utils/tasks/task-card';
 
 const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
-  const importantButNotUrgent = tasks.filter((task) => task.important && !task.urgent);
-  const urgentAndImportant = tasks.filter((task) => task.important && task.urgent);
-  const notImportantAndNotUrgent = tasks.filter((task) => !task.important && !task.urgent);
-  const notImportantButUrgent = tasks.filter((task) => !task.important && task.urgent);
+  const dispatch = useDispatch<AppDispatch>();
+  const { importantButNotUrgent, urgentAndImportant, notImportantAndNotUrgent, notImportantButUrgent } =
+    filterTasksByPriority(tasks);
+
+  const handleTaskClick = (task: Task) => {
+    dispatch(openModal({ name: modals.taskDetails, payload: { task } }));
+  };
 
   return (
     <div className="grid grid-cols-2 gap-4 h-full max-h-1/2 overflow-hidden">
@@ -14,14 +24,7 @@ const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
         </h2>
         <div className="flex flex-col gap-2 w-full overflow-y-scroll h-48 -gray-400">
           {importantButNotUrgent.map((task) => (
-            <div
-              key={task.id}
-              className="bg-yellow-100 dark:bg-yellow-100/80 rounded-lg p-3 flex flex-col items-center justify-center border-2 border-yellow-800 dark:border-yellow-800/50 hover:cursor-pointer hover:bg-yellow-200 dark:hover:bg-yellow-100/50 transition-colors"
-            >
-              <h3 className="text-yellow-800 dark:text-yellow-800/50 font-semibold text-lg text-center">
-                {task.title}
-              </h3>
-            </div>
+            <TaskCard key={task.id} task={task} onClick={() => handleTaskClick(task)} />
           ))}
         </div>
       </div>
@@ -29,12 +32,7 @@ const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
         <h2 className="text-red-800 dark:text-pink-900/50 font-bold text-2xl text-center mb-4">Urgent and Important</h2>
         <div className="flex flex-col gap-2 w-full overflow-y-scroll h-48 -gray-400">
           {urgentAndImportant.map((task) => (
-            <div
-              key={task.id}
-              className="bg-red-100 dark:bg-red-100/80 rounded-lg p-3 flex flex-col items-center justify-center border-2 border-red-800 dark:border-red-800/50 hover:cursor-pointer hover:bg-red-200 dark:hover:bg-red-100/50 transition-colors"
-            >
-              <h3 className="text-red-800 dark:text-red-800/50 font-semibold text-lg text-center">{task.title}</h3>
-            </div>
+            <TaskCard key={task.id} task={task} onClick={() => handleTaskClick(task)} />
           ))}
         </div>
       </div>
@@ -44,12 +42,7 @@ const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
         </h2>
         <div className="flex flex-col gap-2 w-full overflow-y-scroll h-48 -gray-400">
           {notImportantAndNotUrgent.map((task) => (
-            <div
-              key={task.id}
-              className="bg-green-100 dark:bg-green-100/80 rounded-lg p-3 flex flex-col items-center justify-center border-2 border-green-800 dark:border-green-800/50 hover:cursor-pointer hover:bg-green-200 dark:hover:bg-green-100/50 transition-colors"
-            >
-              <h3 className="text-green-800 dark:text-green-800/50 font-semibold text-lg text-center">{task.title}</h3>
-            </div>
+            <TaskCard key={task.id} task={task} onClick={() => handleTaskClick(task)} />
           ))}
         </div>
       </div>
@@ -59,14 +52,7 @@ const ProjectTasksGrid = ({ tasks }: { tasks: Task[] }) => {
         </h2>
         <div className="flex flex-col gap-2 w-full overflow-y-scroll h-48 -gray-400">
           {notImportantButUrgent.map((task) => (
-            <div
-              key={task.id}
-              className="bg-orange-100 dark:bg-orange-100/80 rounded-lg p-3 flex flex-col items-center justify-center border-2 border-orange-800 dark:border-orange-800/50 hover:cursor-pointer hover:bg-orange-200 dark:hover:bg-orange-100/50 transition-colors"
-            >
-              <h3 className="text-orange-800 dark:text-orange-800/50 font-semibold text-lg text-center">
-                {task.title}
-              </h3>
-            </div>
+            <TaskCard key={task.id} task={task} onClick={() => handleTaskClick(task)} />
           ))}
         </div>
       </div>

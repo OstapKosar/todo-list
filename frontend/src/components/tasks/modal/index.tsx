@@ -2,6 +2,8 @@ import { useDispatch } from 'react-redux';
 
 import Modal from '@/components/modal';
 import { modals } from '@/constants/modals';
+import { TaskCard } from '@/utils/tasks/task-card';
+import { filterTasksByPriority } from '@/utils/tasks/priority-filter';
 import type { Task } from '@/store/slices/projects/types';
 import type { AppDispatch } from '@/store/store';
 import { closeModal, openModal } from '@/store/slices/modal/slice';
@@ -18,18 +20,26 @@ const Content = ({ tasks }: { tasks: Task[] }) => {
     dispatch(openModal({ name: modals.createProjectTask }));
   };
 
-  //!!! todo: task is button and when clicked, it should open a modal with the task details
+  const { importantButNotUrgent, urgentAndImportant, notImportantAndNotUrgent, notImportantButUrgent } =
+    filterTasksByPriority(tasks);
+  const allTasks = [
+    ...urgentAndImportant,
+    ...importantButNotUrgent,
+    ...notImportantButUrgent,
+    ...notImportantAndNotUrgent,
+  ];
+
+  const handleTaskClick = (task: Task) => {
+    dispatch(openModal({ name: modals.taskDetails, payload: { task } }));
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg min-w-[350px]">
       <div className="w-full flex flex-col items-center">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Tasks</h1>
         <div className="flex flex-col gap-3 w-full max-h-80 overflow-y-auto">
-          {tasks.length > 0 ? (
-            tasks.map((task) => (
-              <div key={task.id} className="flex items-center bg-gray-300 dark:bg-gray-700 p-4 w-full rounded-lg">
-                <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">{task.title}</h2>
-              </div>
-            ))
+          {allTasks.length > 0 ? (
+            allTasks.map((task) => <TaskCard key={task.id} task={task} onClick={() => handleTaskClick(task)} />)
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
               <p className="text-gray-500 dark:text-gray-400">No tasks found</p>
