@@ -1,3 +1,5 @@
+export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'COMPLETED';
+
 export type Project = {
   id: string;
   name: string;
@@ -11,7 +13,7 @@ export type Task = {
   description?: string;
   urgent: boolean;
   important: boolean;
-  isCompleted: boolean;
+  status: TaskStatus;
 };
 
 export type ProjectsState = {
